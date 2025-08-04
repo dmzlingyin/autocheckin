@@ -88,31 +88,17 @@
 1. 进入 `Actions` 标签页
 2. 选择 `Auto Checkin` 工作流
 3. 点击 `Run workflow` 按钮
+4. **指定签到器**（可选）：
+   - 在 `要执行的签到器` 输入框中填写签到器名称
+   - 支持多个签到器，用逗号分隔，例如：`SSPanel,GLaDOS`
+   - 留空则执行所有可用的签到器
+   - 当前支持的签到器：`SSPanel`、`GLaDOS`
 
 ### 查看运行结果
 
 - 在 `Actions` 标签页查看运行历史
 - 点击具体的运行记录查看详细日志
 - 成功签到会显示相应的成功信息
-
-## 📁 项目结构
-
-```
-autocheckin/
-├── .github/
-│   └── workflows/
-│       └── runner.yml          # GitHub Actions 工作流配置
-├── base_checkin.py             # 签到基础接口
-├── config_manager.py           # 配置管理器
-├── notify.py                   # 通知模块
-├── sspanel_checkin.py          # SSPanel签到模块
-├── glados_checkin.py           # GLaDOS签到模块
-├── checkin.py                  # 主执行文件
-├── example_checkin.py          # 新签到网站示例
-├── config_examples.md          # 配置示例文档
-├── requirements.txt            # Python依赖
-└── README.md                   # 项目说明文档
-```
 
 ## 🔧 自定义配置
 

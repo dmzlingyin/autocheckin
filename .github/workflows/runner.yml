@@ -1,0 +1,52 @@
+name: Auto Checkin
+
+on:
+  # 定时执行
+  schedule:
+    # 每天上午 8:00 (UTC+8)
+    - cron: '0 0 * * *'
+  
+  # 手动触发
+  workflow_dispatch:
+    inputs:
+      checkers:
+        description: '要执行的签到器 (用逗号分隔，留空执行所有)'
+        required: false
+        default: ''
+
+jobs:
+  checkin:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 检出代码
+      uses: actions/checkout@v4
+      
+    - name: 设置Python环境
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10.16'
+        
+    - name: 安装依赖
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        
+    - name: 执行签到
+      env:
+        # JSON格式配置
+        SSPANEL_CONFIG_JSON: ${{ secrets.SSPANEL_CONFIG_JSON }}
+        GLADOS_CONFIG_JSON: ${{ secrets.GLADOS_CONFIG_JSON }}
+        NOTIFY_CONFIG_JSON: ${{ secrets.NOTIFY_CONFIG_JSON }}
+        # 手动触发时指定的签到器
+        CHECKERS: ${{ github.event.inputs.checkers }}
+        
+      run: |
+        python3 checkin.py
+        
+    - name: 上传日志
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: checkin-logs
+        path: checkin.log
