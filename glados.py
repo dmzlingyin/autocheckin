@@ -72,4 +72,9 @@ class GLaDOSCheckin(BaseCheckin):
         checkin_resp.raise_for_status()
         checkin_json = checkin_resp.json()
 
-        return checkin_json.get('code') == 0, checkin_json.get('message')
+        success = checkin_json.get('code') == 0
+        msg = checkin_json.get('message')
+        if "Repeats" in msg:
+            success = True
+
+        return success, msg
