@@ -6,6 +6,7 @@ import requests
 from typing import Dict, Any, List
 from base_checkin import BaseCheckin
 from config import get_glados_config
+import json
 
 
 class GLaDOSCheckin(BaseCheckin):
@@ -32,8 +33,8 @@ class GLaDOSCheckin(BaseCheckin):
             if not cookie:
                 results.append({
                     'success': False,
-                    'account': f'Account_{i+1}',
-                    'message': 'Cookie为空'
+                    'account': f'account_{i+1}',
+                    'message': 'cookie 为空'
                 })
                 continue
             
@@ -41,13 +42,13 @@ class GLaDOSCheckin(BaseCheckin):
                 success, message = self._sign_account(cookie)
                 results.append({
                     'success': success,
-                    'account': f'Account_{i+1}',
+                    'account': f'account_{i+1}',
                     'message': message
                 })
             except Exception as e:
                 results.append({
                     'success': False,
-                    'account': f'Account_{i+1}',
+                    'account': f'account_{i+1}',
                     'message': f'异常: {str(e)}'
                 })
         
@@ -56,23 +57,19 @@ class GLaDOSCheckin(BaseCheckin):
     def _sign_account(self, cookie: str) -> tuple[bool, str]:
         """单个账户签到"""
         session = requests.session()
-        check_url = 'https://glados.rocks/api/user/checkin'
-        
+        checkin_url = "https://glados.rocks/api/user/checkin"
         headers = {
             'cookie': cookie,
-            'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+            'referer': 'https://glados.rocks/console/checkin',
+            'origin': 'https://glados.rocks',
+            'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36',
+            'content-type': 'application/json;charset=UTF-8'
         }
-        
-        data = {
-            'token': 'glados.network'
-        }
-        
+        payload = {'token': 'glados.one'}
+
         # 签到
-        response = session.post(url=check_url, headers=headers, json=data, timeout=10)
-        response.raise_for_status()
-        result = response.json()
-        
-        message = result.get('message', '未知')
-        success = result.get('code') == 0
-        
-        return success, message 
+        checkin_resp = session.post(checkin_url, headers=headers, data=json.dumps(payload), timeout=20)
+        checkin_resp.raise_for_status()
+        checkin_json = checkin_resp.json()
+
+        return checkin_json.get('code') == 0, checkin_json.get('message')
