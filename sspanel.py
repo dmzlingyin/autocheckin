@@ -3,12 +3,9 @@ SSPanel 签到模块
 """
 
 import requests
-import logging
 from typing import Dict, Any, List
 from base_checkin import BaseCheckin
 from config import get_sspanel_config
-
-logger = logging.getLogger(__name__)
 
 
 class SSPanelCheckin(BaseCheckin):

@@ -34,10 +34,3 @@ jobs:
         NOTIFY_CONFIG_JSON: ${{ secrets.NOTIFY_CONFIG_JSON }}
         
       run: python checkin.py
-        
-    - name: 上传日志
-      uses: actions/upload-artifact@v4
-      if: always()
-      with:
-        name: checkin-logs
-        path: checkin.log

@@ -3,12 +3,9 @@ GLaDOS 签到模块
 """
 
 import requests
-import logging
 from typing import Dict, Any, List
 from base_checkin import BaseCheckin
 from config import get_glados_config
-
-logger = logging.getLogger(__name__)
 
 
 class GLaDOSCheckin(BaseCheckin):
@@ -47,14 +44,12 @@ class GLaDOSCheckin(BaseCheckin):
                     'account': f'Account_{i+1}',
                     'message': message
                 })
-                logger.info(f"GLaDOS Account_{i+1}: {'成功' if success else '失败'} - {message}")
             except Exception as e:
                 results.append({
                     'success': False,
                     'account': f'Account_{i+1}',
                     'message': f'异常: {str(e)}'
                 })
-                logger.error(f"GLaDOS Account_{i+1} 签到异常: {e}")
         
         return results
     
