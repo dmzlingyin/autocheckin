@@ -9,7 +9,7 @@ import os
 import logging
 from typing import Dict, Any, List
 from base_checkin import BaseCheckin, CheckinResult, AccountInfo
-from config_manager import get_config_manager
+from config import get_config_manager
 
 logger = logging.getLogger(__name__)
 

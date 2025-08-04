@@ -8,7 +8,7 @@ import os
 import logging
 from typing import List, Dict, Any, Optional
 from base_checkin import CheckinResult
-from config_manager import get_config_manager
+from config import get_config_manager
 
 logger = logging.getLogger(__name__)
 
