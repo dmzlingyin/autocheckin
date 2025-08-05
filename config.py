@@ -36,17 +36,18 @@ def get_config(config_name: str):
         return None
 
 
-# 为了向后兼容，保留原有的方法名
 def get_sspanel_config():
     """获取SSPanel配置"""
     return get_config('sspanel')
-
 
 def get_glados_config():
     """获取GLaDOS配置"""
     return get_config('glados')
 
-
 def get_notify_config():
     """获取通知配置"""
-    return get_config('notify') 
+    return get_config('notify')
+
+def get_clcn_config():
+    """获取首都图书馆配置"""
+    return get_config('clcn')

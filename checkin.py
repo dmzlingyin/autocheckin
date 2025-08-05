@@ -9,6 +9,7 @@ from collections import defaultdict
 from base_checkin import BaseCheckin
 from sspanel import SSPanelCheckin
 from glados import GLaDOSCheckin
+from clcn import CLCNCheckin
 from notify import send_notification
 
 # 配置日志
@@ -50,6 +51,14 @@ class CheckinManager:
             logger.info("✅ GLaDOS签到器初始化成功")
         except Exception as e:
             logger.warning(f"❌ GLaDOS签到器初始化失败: {e}")
+            
+        # 添加首都图书馆签到器
+        try:
+            clcn = CLCNCheckin()
+            self.checkers.append(clcn)
+            logger.info("✅ 首都图书馆签到器初始化成功")
+        except Exception as e:
+            logger.warning(f"❌ 首都图书馆签到器初始化失败: {e}")
     
     def run_all(self) -> List[Dict[str, Any]]:
         """执行所有签到器"""

@@ -5,7 +5,7 @@
 ## 🚀 功能特性
 
 - **自动化签到**: 利用 GitHub Actions 定时调度，无需本地运行
-- **多平台支持**: 支持 SSPanel（如 iKuuu）和 GLaDOS 等机场服务
+- **多平台支持**: 支持 SSPanel（如 iKuuu）、GLaDOS 等机场服务以及首都图书馆
 - **安全可靠**: 使用 GitHub Secrets 安全存储敏感信息
 - **简洁架构**: 模块化设计，易于扩展和维护
 - **免费使用**: 基于 GitHub Actions，完全免费
@@ -14,6 +14,7 @@
 
 - [iKuuu](https://ikuuu.ch) - SSPanel 机场
 - [GLaDOS](https://glados.rocks) - 机场服务
+- [首都图书馆](https://clcn.net.cn) - 首都图书馆签到
 
 ## 🛠️ 安装配置
 
@@ -52,15 +53,27 @@
 }
 ```
 
-#### NOTIFY_CONFIG_JSON (可选)
+#### CLCN_CONFIG_JSON
 ```json
 {
-  "server_chan": {
-    "sckey": "your_server_chan_key"
-  },
-  "pushplus": {
-    "token": "your_pushplus_token"
-  }
+  "url": "https://clcn.net.cn",
+  "accounts": [
+    {
+      "reader_card": "your_reader_card_number",
+      "password": "your_password"
+    },
+    {
+      "reader_card": "another_reader_card_number",
+      "password": "another_password"
+    }
+  ]
+}
+```
+
+#### NOTIFY_CONFIG_JSON (可选, 目前只支持 Server酱)
+```json
+{
+  "key": "your_key"
 }
 ```
 
@@ -105,6 +118,7 @@ autocheckin/
 ├── config.py                   # 配置管理器
 ├── sspanel.py                  # SSPanel签到模块
 ├── glados.py                   # GLaDOS签到模块
+├── clcn.py                     # 首都图书馆签到模块
 ├── checkin.py                  # 主执行文件
 ├── requirements.txt            # Python依赖
 └── README.md                   # 项目说明文档
@@ -159,6 +173,8 @@ autocheckin/
 
 ## 📝 更新日志
 
+### v1.0.1
+- 支持首都图书馆自动签到
 
 ### v1.0.0
 - 初始版本发布
@@ -198,4 +214,4 @@ autocheckin/
 
 ---
 
-如果这个项目对你有帮助，请给个 ⭐️ 支持一下！ 
+如果这个项目对你有帮助，请给个 ⭐️ 支持一下！

@@ -25,12 +25,14 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
+        playwright install
         
     - name: 执行签到
       env:
         # JSON格式配置
         SSPANEL_CONFIG_JSON: ${{ secrets.SSPANEL_CONFIG_JSON }}
         GLADOS_CONFIG_JSON: ${{ secrets.GLADOS_CONFIG_JSON }}
+        CLCN_CONFIG_JSON: ${{ secrets.CLCN_CONFIG_JSON }}
         NOTIFY_CONFIG_JSON: ${{ secrets.NOTIFY_CONFIG_JSON }}
         
       run: python checkin.py
