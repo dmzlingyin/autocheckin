@@ -68,8 +68,9 @@ class CLCNCheckin(BaseCheckin):
                 logger.info(f"开始首都图书馆账号 {reader_card} 的签到流程")
 
                 # 启动浏览器
-                browser = playwright.chromium.launch(headless=False)
+                browser = playwright.chromium.launch(headless=True)
                 page = browser.new_page()
+                page.set_default_timeout(60000)  # 全局超时 60 秒
 
                 # 先访问首页
                 logger.info(f"访问首页: {self.url}")
