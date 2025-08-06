@@ -68,7 +68,7 @@ class CLCNCheckin(BaseCheckin):
                 logger.info(f"开始首都图书馆账号 {reader_card} 的签到流程")
 
                 # 启动浏览器
-                browser = playwright.chromium.launch(headless=True)
+                browser = playwright.chromium.launch(headless=False)
                 page = browser.new_page()
 
                 # 先访问首页
@@ -117,9 +117,6 @@ class CLCNCheckin(BaseCheckin):
                                     captcha_url = f"{base_url}{captcha_url}"
 
                                 logger.info(f"验证码URL: {captcha_url}")
-
-                                # 导入OCR模块
-                                from ocr import recognize_online_image
 
                                 # 在同一个浏览器会话中请求图片
                                 img_response = page.request.get(captcha_url)
