@@ -87,6 +87,6 @@ class SSPanelCheckin(BaseCheckin):
         checkin_result = checkin_response.json()
         
         message = checkin_result.get('msg', '未知')
-        success = checkin_result.get('ret') == 0
+        success = checkin_result.get('ret') == 1
         
         return success, message 
